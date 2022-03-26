@@ -32,7 +32,7 @@ jobs:
       - name: Build front
         run: cd front && npm ci && npm run build && cd ..
       - name: Prepare artefact
-        run: rm -r node_module && cd front rm -r node_module && cd .. && mkdir art && cp -R . ./art
+        run: rm -r node_modules && cd front rm -r node_modules && cd .. && mkdir art && cp -R . ./art && cd art && rm -r front && rm -r art && cd ..
       - name: Creating artifact
         uses: actions/upload-artifact@v2
         with:
