@@ -26,6 +26,8 @@ io.on('connection', (socket) => {
     socket.on('unauth', () => {
         delete socket.token
     })
+
+    socket.emit('setup', true)
 })
 
 // --------------------- send updates

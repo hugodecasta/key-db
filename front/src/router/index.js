@@ -4,6 +4,7 @@ import HomeView from '../views/home.vue'
 import Connect from '../views/connect.vue'
 import Admin from '../views/admin.vue'
 import password from '../views/password.vue'
+import keys from '../views/keys.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/password',
     name: 'password',
     component: password
+  },
+  {
+    path: '/keys',
+    name: 'keys',
+    component: keys
   }
 ]
 

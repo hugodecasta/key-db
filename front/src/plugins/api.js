@@ -113,6 +113,10 @@ class APIS {
             const headers = null
             return this.__auth_api("connect", "post", data, headers, "json")
         },
+        get_token: () => {
+            const headers = null
+            return this.__auth_api("token", "get", null, headers, null)
+        },
         change_password: (data = null) => {
             const headers = null
             return this.__auth_api("pass", "post", data, headers, "json")

@@ -27,6 +27,14 @@
             </v-btn>
             <v-spacer></v-spacer>
             <v-btn
+                color="primary"
+                to='/keys'
+                text
+            >
+                keys playground
+            </v-btn>
+            <v-spacer></v-spacer>
+            <v-btn
                 text
                 small
                 color="primary"

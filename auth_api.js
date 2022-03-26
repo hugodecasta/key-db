@@ -119,6 +119,9 @@ auth_api.post('/connect',
 auth_api.get('/connect',
     get_token,
     create_reser((req) => auth_engine.connected(req.token)))
+auth_api.get('/token',
+    get_token,
+    create_reser((req) => auth_engine.connected(req.token) ? req.token : null))
 auth_api.delete('/connect',
     get_token,
     create_reser((req, res) => {

@@ -4,7 +4,8 @@
   "description": "Key Database with auth",
   "main": "index.js",
   "scripts": {
-    "test": "ava tests.js"
+    "test": "ava tests.js",
+    "build_front": "cd front && npm run build && cd .."
   },
   "repository": {
     "type": "git",

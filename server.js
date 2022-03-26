@@ -6,10 +6,6 @@ module.exports = async (PORT) => {
     const http = require('http')
     const server = http.createServer(app)
 
-    // const swaggerUi = require('swagger-ui-express')
-    // const swaggerFile = require('./swagger_output.json')
-    // app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
-
     const auth_api = require('./auth_api')
     app.use('/api/auth', auth_api)
 
@@ -18,6 +14,12 @@ module.exports = async (PORT) => {
 
     const key_socket_api = require('./key_socket_api')
     key_socket_api.attach(server)
+
+    const dist_dir = __dirname + '/dist'
+    if (require('fs').existsSync(dist_dir)) {
+        app.use(express.static(dist_dir))
+        app.use((req, res) => res.sendFile(dist_dir + '/index.html'))
+    }
 
     server.on('close', () => console.log('KEY-DB server closed'))
     server.listen(PORT)

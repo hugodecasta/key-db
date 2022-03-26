@@ -13,6 +13,10 @@
                     "method": "post",
                     "data_needed": true
                 },
+                "get_token": {
+                    "url": "token",
+                    "method": "get"
+                },
                 "change_password": {
                     "url": "pass",
                     "method": "post",
