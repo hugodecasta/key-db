@@ -30,7 +30,7 @@ jobs:
       - name: Test project
         run: npm test
       - name: Build front
-        run: npm run build_front
+        run: cd front && npm ci && npm run build && cd ..
       - name: Creating artifact
         uses: actions/upload-artifact@v2
         with:
