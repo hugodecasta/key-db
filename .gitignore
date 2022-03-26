@@ -2,6 +2,10 @@ data
 data/
 data/*
 
+art
+art/
+art/*
+
 # Logs
 logs
 *.log
