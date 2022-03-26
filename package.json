@@ -1,0 +1,38 @@
+{
+  "name": "key-db",
+  "version": "0.1.0",
+  "description": "Key Database with auth",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hugodecasta/key-db.git"
+  },
+  "keywords": [
+    "Key",
+    "Database",
+    "Auth"
+  ],
+  "author": "Hugo Castaneda",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hugodecasta/key-db/issues"
+  },
+  "homepage": "https://github.com/hugodecasta/key-db#readme",
+  "dependencies": {
+    "body-parser": "^1.19.2",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.17.3",
+    "rand-token": "^1.0.1",
+    "socket.io": "^4.4.1",
+    "string-hash": "^1.1.3",
+    "swagger-ui-express": "^4.3.0"
+  },
+  "devDependencies": {
+    "ava": "^4.1.0",
+    "node-fetch": "^2.6.7",
+    "socket.io-client": "^4.4.1"
+  }
+}
