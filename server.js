@@ -4,7 +4,7 @@ module.exports = async (PORT) => {
     const app = express()
 
     const http = require('http')
-    const server = http.createServer(app).listen(PORT)
+    const server = http.createServer(app)
 
     // const swaggerUi = require('swagger-ui-express')
     // const swaggerFile = require('./swagger_output.json')
@@ -20,6 +20,7 @@ module.exports = async (PORT) => {
     key_socket_api.attach(server)
 
     server.on('close', () => console.log('KEY-DB server closed'))
+    server.listen(PORT)
     console.log('KEY-DB server listening on', PORT)
 
     return server

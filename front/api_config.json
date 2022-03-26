@@ -1,0 +1,42 @@
+{
+    "name": "api",
+    "apis": {
+        "auth": {
+            "host": "/api/auth",
+            "endpoints": {
+                "connected": {
+                    "url": "connect",
+                    "method": "get"
+                },
+                "connect": {
+                    "url": "connect",
+                    "method": "post",
+                    "data_needed": true
+                },
+                "disconnect": {
+                    "url": "connect",
+                    "method": "delete"
+                }
+            },
+            "apis": {
+                "user": {
+                    "host": "",
+                    "endpoints": {
+                        "get": {
+                            "url": "",
+                            "method": "get"
+                        },
+                        "is_admin": {
+                            "url": "is_admin",
+                            "method": "get"
+                        }
+                    }
+                }
+            }
+        },
+        "keys": {
+            "host": "/api/auth",
+            "endpoints": {}
+        }
+    }
+}

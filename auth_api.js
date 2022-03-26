@@ -15,7 +15,6 @@ const secure_waiter = parseInt(process.env.SECURE_WAITER) ?? 2000
 
 function get_token(req, res, next) {
     const token = req.signedCookies['db_auth']
-    if (!token) return res.status(401).send('token needed')
     req.token = token
     next()
 }
@@ -57,7 +56,7 @@ function wait(ms) {
 
 function check_token(req, res, next) {
     get_token(req, res, () => {
-        if (!auth_engine.connected(req.token)) return res.status(401)
+        if (!auth_engine.connected(req.token)) return res.status(401).send('token needed')
         next()
     })
 }
@@ -122,7 +121,11 @@ auth_api.get('/connect',
     create_reser((req) => auth_engine.connected(req.token)))
 auth_api.delete('/connect',
     get_token,
-    create_reser((req) => auth_engine.disconnect(req.token)))
+    create_reser((req, res) => {
+        auth_engine.disconnect(req.token)
+        res.clearCookie('db_auth')
+        return true
+    }))
 
 // -------------------------- user
 
