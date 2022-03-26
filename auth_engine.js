@@ -104,7 +104,7 @@ function update_user_pass(conn, pass, new_pass) {
     backup_sys.trigger()
 }
 
-function create_user(conn, pass, fname, lname, roles = []) {
+function create_user(conn, fname, lname, pass, roles = []) {
     if (conn_exists(conn)) throw new Error(`conn "${conn}" already exists`)
     const user_id = (ids_to_user_id(conn, pass))
     const admin_user = { id: user_id, conn, fname, lname, roles }

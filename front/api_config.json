@@ -13,15 +13,20 @@
                     "method": "post",
                     "data_needed": true
                 },
-                "disconnect": {
-                    "url": "connect",
-                    "method": "delete"
+                "change_password": {
+                    "url": "pass",
+                    "method": "post",
+                    "data_needed": true
                 }
             },
             "apis": {
                 "user": {
                     "host": "",
                     "endpoints": {
+                        "disconnect": {
+                            "url": "connect",
+                            "method": "delete"
+                        },
                         "get": {
                             "url": "",
                             "method": "get"
@@ -29,6 +34,44 @@
                         "is_admin": {
                             "url": "is_admin",
                             "method": "get"
+                        }
+                    }
+                },
+                "admin": {
+                    "host": "admin",
+                    "apis": {
+                        "users": {
+                            "host": "",
+                            "endpoints": {
+                                "create": {
+                                    "url": "create",
+                                    "method": "post",
+                                    "data_needed": true
+                                },
+                                "delete": {
+                                    "url": "user/:conn",
+                                    "method": "delete"
+                                },
+                                "list": {
+                                    "url": "list",
+                                    "method": "get"
+                                }
+                            },
+                            "apis": {
+                                "roles": {
+                                    "host": "",
+                                    "endpoints": {
+                                        "add": {
+                                            "url": "role/:conn/:role",
+                                            "method": "put"
+                                        },
+                                        "delete": {
+                                            "url": "role/:conn/:role",
+                                            "method": "delete"
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }

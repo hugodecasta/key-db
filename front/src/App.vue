@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <v-container
-            style="max-width:500px"
+            style="max-width:700px"
             fill-height
             fluid
         >

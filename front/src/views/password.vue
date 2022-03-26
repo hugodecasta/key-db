@@ -1,6 +1,6 @@
 <template>
     <v-card :elevation="$is_mobile ? 0 : 3">
-        <v-card-title>Connect</v-card-title>
+        <v-card-title>Change password</v-card-title>
         <v-card-text>
             <v-form v-model="form_is_valid">
                 <v-text-field
@@ -11,17 +11,31 @@
                 </v-text-field>
                 <v-text-field
                     type="password"
-                    label="password"
+                    label="old password"
                     :rules="[v=>v.length>0 || 'required']"
                     v-model="form.pass"
                 >
                 </v-text-field>
+                <v-text-field
+                    type="password"
+                    label="new password"
+                    :rules="[v=>v.length>=8 || 'password must be of lenght 8 at least']"
+                    v-model="form.new_pass"
+                >
+                </v-text-field>
+                <v-text-field
+                    type="password"
+                    label="validate new password"
+                    :rules="[(form.validate_pass === form.new_pass) || 'Password must match']"
+                    v-model="form.validate_pass"
+                >
+                </v-text-field>
                 <v-btn
                     block
-                    @click="connect"
+                    @click="send_new_pass"
                     color="primary"
                     :disabled="!form_is_valid"
-                >connect</v-btn>
+                >Change password</v-btn>
             </v-form>
         </v-card-text>
     </v-card>
@@ -34,21 +48,18 @@ export default {
         form: {
             conn: '',
             pass: '',
+            new_pass: '',
+            validate_pass: '',
         }
     }),
     methods: {
-        async check_error(func) {
+        async send_new_pass() {
             try {
-                await func()
-            } catch (e) {
-                alert('An error occured: ' + e.message)
-            }
-        },
-        async connect() {
-            await this.check_error(async () => {
-                await this.$api.auth.connect(this.form)
+                await this.$api.auth.change_password(this.form)
                 this.$router.push('/')
-            })
+            } catch (e) {
+                alert('an error occured')
+            }
         }
     }
 }

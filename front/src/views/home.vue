@@ -15,15 +15,25 @@
             <v-btn
                 v-if="is_admin"
                 color="primary"
+                to='/admin'
             >
                 <v-icon left>mdi-shield</v-icon>Admin
+            </v-btn>
+            <v-btn
+                color="primary"
+                to='/password'
+            >
+                <v-icon left>mdi-key</v-icon>change pass
             </v-btn>
             <v-spacer></v-spacer>
             <v-btn
                 text
                 small
                 color="primary"
-            >disconnect</v-btn>
+                @click="disconnect"
+            >
+                disconnect<v-icon right>mdi-logout</v-icon>
+            </v-btn>
         </v-card-actions>
     </v-card>
     <v-progress-linear
@@ -40,12 +50,21 @@ export default {
         user: null,
         is_admin: false,
     }),
-    async mounted() {
-        this.connected = await this.$api.auth.connected()
-        if (this.connected) {
-            this.user = await this.$api.auth.user.get()
-            this.is_admin = await this.$api.auth.user.is_admin()
+    methods: {
+        async disconnect() {
+            await this.$api.auth.user.disconnect()
+            this.load()
+        },
+        async load() {
+            this.connected = await this.$api.auth.connected()
+            if (this.connected) {
+                this.user = await this.$api.auth.user.get()
+                this.is_admin = await this.$api.auth.user.is_admin()
+            }
         }
+    },
+    mounted() {
+        this.load()
     }
 }
 </script>
