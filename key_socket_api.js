@@ -1,5 +1,5 @@
 const { Server } = require("socket.io")
-const io = new Server()
+const io = new Server({ cors: { origin: '*' } })
 module.exports = io
 
 const auth_engine = require('./auth_engine')
