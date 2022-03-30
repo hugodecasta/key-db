@@ -113,7 +113,7 @@ auth_api.post('/connect',
     wait(secure_waiter), get_ids,
     create_reser((req, res) => {
         const token = auth_engine.connect(req.conn, req.pass)
-        res.cookie('db_auth', token, { signed: true })
+        res.cookie('db_auth', token, { signed: true, secure: true, path: '' })
         return token
     }))
 auth_api.get('/connect',

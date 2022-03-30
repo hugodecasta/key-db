@@ -366,6 +366,7 @@ test.serial('server connect', async t => {
     t.false(cookies.db_auth != null)
     t.true(await send('/api/auth/connect', 'post', { conn: 'admin', pass: 'admin' }, null) != null)
     t.true(cookies.db_auth != null)
+    t.is(cookies.Path, undefined)
 })
 
 test.serial('server is connected', async t => {
