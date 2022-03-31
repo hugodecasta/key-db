@@ -1,6 +1,6 @@
 {
   "name": "key-db",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Key Database with auth",
   "main": "index.js",
   "scripts": {
