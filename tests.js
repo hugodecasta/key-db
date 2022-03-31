@@ -313,15 +313,17 @@ const fetch = require('node-fetch')
 
 let cookies = {}
 
+let saved_token = null
+
 async function send(url, method = 'GET', data = null, token = null, get_resp = false) {
+    const base_url = url
     url = 'http://localhost:3000' + url
-    const cookie = Object.entries(cookies ?? {}).map(([n, v]) => n + '=' + v).join('; ')
+    // const cookie = Object.entries(cookies ?? {}).map(([n, v]) => n + '=' + v).join('; ')
     const options = {
         method,
         headers: {
-            'Authorization': token,
+            'Authorization': token ?? saved_token,
             'content-type': data ? 'application/json' : '',
-            cookie,
         },
         body: data ? JSON.stringify(data) : undefined
     }
@@ -333,9 +335,11 @@ async function send(url, method = 'GET', data = null, token = null, get_resp = f
     }
     const set_cookies = resp.headers.get('set-cookie')
     const cookies_to_add = Object.fromEntries(set_cookies?.split('; ').map(e => e.split('=')) ?? [])
+    const new_token = cookies_to_add.db_auth
     cookies = { ...cookies, ...cookies_to_add }
     if (get_resp) return resp
     const json = await resp.json()
+    saved_token = (base_url == '/api/auth/connect' && method.toLocaleLowerCase() == 'post') ? json : saved_token
     return json
 }
 
@@ -362,20 +366,15 @@ test.serial('setup server', async (t) => {
 
 // -------- AUTH
 
-let saved_token = null
-
 test.serial('server connect', async t => {
     t.false(cookies.db_auth != null)
-    await t.notThrowsAsync(async () => saved_token = await send('/api/auth/connect', 'post', { conn: 'admin', pass: 'admin' }, null))
+    await t.notThrowsAsync(() => send('/api/auth/connect', 'post', { conn: 'admin', pass: 'admin' }, null))
     t.true(saved_token != null)
     t.true(cookies.db_auth != null)
 })
 
 test.serial('server is connected', async t => {
-    const old_cookies = cookies
-    cookies = null
-    t.true(await send('/api/auth/connect', 'get', null, saved_token))
-    cookies = old_cookies
+    t.true(await send('/api/auth/connect', 'get', null))
 })
 
 test.serial('server is connected Header', async t => {

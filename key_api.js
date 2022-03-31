@@ -12,7 +12,7 @@ key_api.use(cookieParser(cookie_secret))
 // ------------------------------------------ UTILS
 
 function get_token(req, res, next) {
-    const token = req.signedCookies['db_auth']
+    const token = req.signedCookies['db_auth'] ?? req.get('Authorization')
     req.token = token
     next()
 }

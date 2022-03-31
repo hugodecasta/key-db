@@ -14,7 +14,7 @@ const secure_waiter = parseInt(process.env.SECURE_WAITER) ?? 2000
 // ------------------------------------------ UTILS
 
 function get_token(req, res, next) {
-    const token = req.signedCookies['db_auth'] ?? req.get('Authorization')
+    const token = req.get('Authorization') ?? req.signedCookies['db_auth']
     req.token = token
     next()
 }
