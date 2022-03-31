@@ -369,7 +369,6 @@ test.serial('server connect', async t => {
     await t.notThrowsAsync(async () => saved_token = await send('/api/auth/connect', 'post', { conn: 'admin', pass: 'admin' }, null))
     t.true(saved_token != null)
     t.true(cookies.db_auth != null)
-    t.is(cookies.Path, undefined)
 })
 
 test.serial('server is connected', async t => {
