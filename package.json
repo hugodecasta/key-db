@@ -1,6 +1,6 @@
 {
   "name": "key-db",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Key Database with auth",
   "main": "index.js",
   "scripts": {
@@ -30,13 +30,15 @@
     "rand-token": "^1.0.1",
     "socket.io": "^4.4.1",
     "string-hash": "^1.1.3",
-    "swagger-ui-express": "^4.3.0"
+    "swagger-ui-express": "^4.3.0",
+    "ansi-regex": ">=3.0.1"
   },
   "devDependencies": {
     "ava": "^4.1.0",
     "fs-extra": "^10.0.1",
     "node-fetch": "^2.6.7",
     "rimraf": "^3.0.2",
-    "socket.io-client": "^4.4.1"
+    "socket.io-client": "^4.4.1",
+    "ansi-regex": ">=3.0.1"
   }
 }
