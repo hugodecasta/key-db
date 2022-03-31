@@ -315,7 +315,7 @@ let cookies = {}
 
 async function send(url, method = 'GET', data = null, token = null, get_resp = false) {
     url = 'http://localhost:3000' + url
-    const cookie = Object.entries(cookies).map(([n, v]) => n + '=' + v).join('; ')
+    const cookie = Object.entries(cookies ?? {}).map(([n, v]) => n + '=' + v).join('; ')
     const options = {
         method,
         headers: {
@@ -362,14 +362,24 @@ test.serial('setup server', async (t) => {
 
 // -------- AUTH
 
+let saved_token = null
+
 test.serial('server connect', async t => {
     t.false(cookies.db_auth != null)
-    t.true(await send('/api/auth/connect', 'post', { conn: 'admin', pass: 'admin' }, null) != null)
+    await t.notThrowsAsync(async () => saved_token = await send('/api/auth/connect', 'post', { conn: 'admin', pass: 'admin' }, null))
+    t.true(saved_token != null)
     t.true(cookies.db_auth != null)
     t.is(cookies.Path, undefined)
 })
 
 test.serial('server is connected', async t => {
+    const old_cookies = cookies
+    cookies = null
+    t.true(await send('/api/auth/connect', 'get', null, saved_token))
+    cookies = old_cookies
+})
+
+test.serial('server is connected Header', async t => {
     t.true(await send('/api/auth/connect', 'get'))
 })
 
