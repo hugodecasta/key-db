@@ -202,6 +202,7 @@ auth_engine.disconnect = (token) => clear_token(token)
 
 // -------------------------- user
 
+auth_engine.get_full_user = (token) => get_user(get_connected_token_user_id(token))
 auth_engine.get_user = (token) => get_user_safe(get_connected_token_user_id(token))
 auth_engine.update_user = (token, user) => update_user(get_connected_token_user_id(token), user)
 auth_engine.update_user_pass = update_user_pass

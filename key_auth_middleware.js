@@ -10,29 +10,27 @@ function is_public_access(key_data, access) {
     return !key_data.access[access]
 }
 
-function has_access(key_data, access, conn) {
-    if (key_data.owner == conn) return true
+function user_has_access_data(key_data, access, user) {
+    if (is_public_access(key_data, access)) return true
+    if (key_data.owner == user.conn) return true
     const allowed = key_data.access[access]
-    return !allowed || allowed.includes(conn)
+    return !allowed || allowed.includes(user.conn) || user.roles.filter(r => allowed.includes(r)).length > 0
+}
+
+function has_access(key_data, access, conn) {
+    if (is_public_access(key_data, access)) return true
+    if (!auth_engine.user_exists(conn)) return false
+    return user_has_access_data(key_data, access, auth_engine.find_user(conn))
 }
 
 function token_has_access_data(token, key_data, access) {
     if (is_public_access(key_data, access)) return true
-    const { conn } = auth_engine.get_user(token)
-    return has_access(key_data, access, conn)
+    if (!token) return false
+    return user_has_access_data(key_data, access, auth_engine.get_full_user(token))
 }
 
 function token_has_access(token, key, access) {
-    const key_data = key_engine.get(key)
-    if (is_public_access(key_data, access)) return true
-    if (!token) return false
-    const { conn } = auth_engine.get_user(token)
-    return has_access(key_data, access, conn)
-}
-
-function check_access(key_data, access, conn) {
-    if (!has_access(key_data, access, conn)) throw new Error('insufficiant rights')
-    return true
+    return token_has_access_data(token, key_engine.get(key), access)
 }
 
 function check_token_access(token, key, access) {
